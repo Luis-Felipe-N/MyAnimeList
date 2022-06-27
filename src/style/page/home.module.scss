@@ -1,0 +1,32 @@
+
+
+.home {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 5%;
+    display: flex;
+    gap: 2rem;
+
+    header {
+        margin: 1rem 0;
+
+        h3 {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            &::before {
+                content: '';
+                width: 10px;
+                height: 10px;
+                border-radius: 10px;
+                display: block;
+                background-color: var(--purple-500);
+            }
+        }
+    }
+
+    ul {
+        list-style: none;
+
+    }
+}

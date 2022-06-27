@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1080px) {
+    html {
+        font-size: 93.75%;
+    }
+}
+
+@media (max-width: 720px) {
+    html {
+        font-size: 87.5%;
+    }
+}
+
+:root {
+    --white: #ffffff;
+    --gray-100: #e1e1e6;
+    --gray-300: #c4c4cc;
+    --gray-400: #8d8d99;
+    --gray-600: #323238;
+    --gray-700: #29292e;
+    --gray-800: #202024;
+    --gray-900: #121214;
+    
+    --purple-50: #FAF5FF;
+    --purple-100: #E9D8FD;
+    --purple-200: #D6BCFA;
+    --purple-300: #B794F4;
+    --purple-400: #9F7AEA;
+    --purple-500: #805AD5;
+    --purple-600: #6B46C1;
+    --purple-700: #553C9A;
+    --purple-800: #44337A;
+    --purple-900: #322659;
+}
+
+body {
+    background-color: var(--gray-900);
+    color: var(--gray-100);
+}
+
+body, input, textarea, button {
+    font-weight: 400;
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+}
+
+.modal__overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    display: grid;
+    place-items: center;
+}
