@@ -15,7 +15,7 @@ export function Card({anime}: ICardProps) {
 
     useEffect(() => {
         if (dropDownIsOpen) {
-            function handleClickOutSide(event: Event) {
+            function handleClickOutSide(event: any) {
                 if (!dropDownRef.current?.contains(event.target)) {
                     setDropDownIsOpen(false)
 
