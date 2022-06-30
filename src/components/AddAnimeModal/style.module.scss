@@ -4,4 +4,93 @@
 
 .modal__content {
     background-color: var(--gray-700);
+    padding: 1rem;
+    border-radius: 8px;
+    max-width: 450px;
+    width: 100%;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        margin-top: 2rem;
+
+        label {
+            font-weight: 600;
+
+            input, textarea {
+                display: block;
+                width: 100%;
+                margin: .5rem 0 1rem;
+                padding: .7rem 1rem;
+                border-radius: 8px;
+                border: 1px solid var(--gray-600);
+                color: var(--gray-100);
+                background-color: transparent;
+            }
+
+            textarea {
+                resize: none;
+                height: 7rem;
+            }
+
+            
+        }
+
+        .inputFile {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            
+            .imagePreview {
+                cursor: pointer;
+                border: 1px dashed var(--gray-600);
+                color: var(--gray-200);
+                width: 7rem;
+                height: 7rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                font-size: .8rem;
+                border-radius: 5px;
+            }
+
+            img {
+                width: 7rem;
+                height: 7rem;
+                border-radius: 5px;
+                object-fit: contain;
+            }
+
+            span {
+                margin: 1rem 0 .5rem;
+                display: block;
+            }
+
+            p {
+                display: block;
+            }
+
+            input {
+                max-width: 0;
+                padding: 0;
+                visibility: hidden;
+            }
+        }
+
+        button {
+            padding: .8rem 2rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: 0;
+            border-radius: 5px;
+            background-color: var(--purple-600);
+            transition: .2s;
+            color: var(--white);
+
+            &:hover {
+                background-color: var(--purple-500);
+            }
+        }
+    }
 }

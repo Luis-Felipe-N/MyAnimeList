@@ -3,6 +3,7 @@ import { AddAnimeModal } from "./components/AddAnimeModal"
 import { Header } from "./components/Header"
 import { Home } from "./page"
 import './style/global.scss'
+import axios from 'axios'
 
 function App() {
     const [ addAnimeModalIsOpen, setAddAnimeModalIsOpen ] = useState(false)

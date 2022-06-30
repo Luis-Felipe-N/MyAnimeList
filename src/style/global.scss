@@ -36,6 +36,8 @@
     --purple-700: #553C9A;
     --purple-800: #44337A;
     --purple-900: #322659;
+
+    --red: #F75A68;
 }
 
 body {
@@ -60,4 +62,10 @@ body, input, textarea, button {
 
     display: grid;
     place-items: center;
+}
+
+:focus {
+    transition: .2s;
+    box-shadow: 0 0 0 2px var(--gray-700),  0 0 0 4px var(--purple-400);
+    outline: 0;
 }
