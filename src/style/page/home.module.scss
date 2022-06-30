@@ -5,9 +5,9 @@
     margin: 2rem auto;
     padding: 0 5%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
-
+    height: calc(100vh - 6rem);
 
 
     header {
@@ -31,5 +31,18 @@
     ul {
         list-style: none;
 
+    }
+}
+
+@media (max-width: 1020px) {
+    .home {
+        display: flex;
+        overflow-x: auto;
+        
+
+        section {
+            width: 90%;
+            flex-shrink: 0;
+        }
     }
 }

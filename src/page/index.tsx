@@ -10,7 +10,7 @@ export function Home() {
     useEffect(() => {
         getAnimes(setAnimes)
         window.addEventListener('storage', () => getAnimes(setAnimes))
-        console.log('Home')
+        return  window.removeEventListener('storage', () => getAnimes(setAnimes))
     }, [])
 
     return (
@@ -21,7 +21,7 @@ export function Home() {
                 </header>
                 <ul>
                     {animes && animes.toWatch.map( anime => (
-                        <li>
+                        <li key={anime.id}>
                             <Card anime={anime} />
                         </li>
                     ))}
@@ -33,7 +33,7 @@ export function Home() {
                 </header>
                 <ul>
                     {animes && animes.watching.map( anime => (
-                        <li>
+                        <li key={anime.id}>
                             <Card anime={anime} />
                         </li>
                     ))}
@@ -45,7 +45,7 @@ export function Home() {
                 </header>
                 <ul>
                     {animes && animes.watched.map( anime => (
-                        <li>
+                        <li key={anime.id}>
                             <Card anime={anime} />
                         </li>
                     ))}

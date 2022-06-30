@@ -66,7 +66,7 @@ export function moveTo(animeId: string, status: StatusAnime, statusTo: StatusAni
 
         const animeTo = [
             ...animes[statusTo], 
-            {...animes[status].filter(anime => anime.id === animeId)[0], statusTo}
+            {...animes[status].filter(anime => anime.id === animeId)[0], status: statusTo}
         ]
         const animesMoved = {
             ...animes, 
@@ -82,7 +82,8 @@ export function moveTo(animeId: string, status: StatusAnime, statusTo: StatusAni
 
 export function getAnimes(setAnimes: React.Dispatch<React.SetStateAction<IAnimes | undefined>>) {
     const animesStorage = localStorage.getItem('animes')
-    console.log('Buscando anime')
+    console.log('anie')
+    
     if (animesStorage) {
         const animes: IAnimes = JSON.parse(animesStorage)
 
