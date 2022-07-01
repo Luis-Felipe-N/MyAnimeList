@@ -62,6 +62,7 @@ body, input, textarea, button {
 
     display: grid;
     place-items: center;
+    padding: 0 5%;
 }
 
 :focus {
@@ -69,3 +70,25 @@ body, input, textarea, button {
     box-shadow: 0 0 0 2px var(--gray-700),  0 0 0 4px var(--purple-400);
     outline: 0;
 }
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--purple-400) #4f4f4f;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 1px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #4f4f4f;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--purple-400);
+    border-radius: 1px;
+    border: 1px solid var(--purple-400);
+  }

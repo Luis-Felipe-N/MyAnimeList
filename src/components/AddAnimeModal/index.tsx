@@ -3,10 +3,21 @@ import ReactModal from 'react-modal';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { Target } from 'phosphor-react';
 import { addAnime } from '../../service/localstoage';
+import { getAnimes, getAnimesByText } from '../../service/api';
 
 interface IAddAnimeModalProps {
     isOpen: boolean;
     setToggleModal: () => void;
+}
+
+interface IAnimeFetch {
+    attributes: {
+        posterImage:  {small: string};
+        canonicalTitle: string;
+        description: string;
+        slug: string;
+    },
+    id: string;
 }
 
 interface IForm {
@@ -20,8 +31,10 @@ interface IForm {
 
 ReactModal.setAppElement('#root')
 
+let pauseToWrite: any;
 export function AddAnimeModal({isOpen, setToggleModal}: IAddAnimeModalProps) {
-
+    const [animes, setAnimes] = useState<IAnimeFetch[] | null>()
+    const [errors, setErrors] = useState('')
     const [formData, setFormData] = useState<IForm>({
         title: '',
         description: '',
@@ -31,6 +44,59 @@ export function AddAnimeModal({isOpen, setToggleModal}: IAddAnimeModalProps) {
         }
     })
 
+    const containerAutoCompleteRef = useRef<HTMLLabelElement>(null)
+
+    async function handleAutocomplete() {
+        const data = await getAnimes()
+
+        if (data) {
+            setAnimes(data)
+            removeAutocompleteByCLickOutSide()
+        }
+    }
+
+    function removeAutocompleteByCLickOutSide() {
+        if (containerAutoCompleteRef.current) {
+            function handleClickOutSide(event: any) {
+                if (!containerAutoCompleteRef.current?.contains(event.target)) {
+                    handleRemoveAutocomplete()
+                    window.removeEventListener('click', handleClickOutSide)
+                }
+            }
+            window.addEventListener('click', handleClickOutSide)
+        }
+    }
+    
+    function handleFilterAutocomplete(text: string) {
+        clearTimeout(pauseToWrite)
+        pauseToWrite = setTimeout(async () => {
+            const data = await getAnimesByText(text)
+            setAnimes(data)
+            console.log(data)
+        }, 500);
+        
+    }
+
+    function handleSetAnimeByAutocomplete(animeId: string) {
+        if (animes) {
+            const anime = animes.filter( anime => anime.id === animeId)[0]
+
+            setFormData({
+                title: anime.attributes.canonicalTitle,
+                description: anime.attributes.description,
+                image: {
+                    url: anime.attributes.posterImage.small,
+                    name: anime.attributes.slug + '.jpeg'
+                }
+            })
+        }
+    }
+
+    function handleRemoveAutocomplete() {
+        setAnimes(null)
+        clearTimeout(pauseToWrite)
+    }
+    
     function handleChangeImage(target: HTMLInputElement) {
         const file = target.files?.item(0)
         
@@ -45,27 +111,70 @@ export function AddAnimeModal({isOpen, setToggleModal}: IAddAnimeModalProps) {
     function handleAddNewAnime(event: FormEvent) {
         event.preventDefault();
 
-        addAnime(formData)
-        console.log('w')
+        const hasTitle = formData.title.trim() !== ''
+        const hasFile = formData.image.url !== ''
+
+        if (!hasFile) {
+            setErrors('Imagem é obrigátoria!')
+            return
+        }
+
+        if (!hasTitle) {
+            setErrors('Título é obrigátorio!')
+            return
+        }
+
+        if (formData.title.trim()) {
+            addAnime(formData)
+            setFormData({
+                title: '',
+                description: '',
+                image: {
+                    name: '',
+                    url: ''
+                }
+            })
+
+            setErrors('')
+        }
     }
 
     return (
         <ReactModal
             isOpen={isOpen}
             onRequestClose={setToggleModal}
-            className={style.modal__content}
+            className={errors ? `${style.modal__content} ${style.modal__error}` : style.modal__content}
             overlayClassName="modal__overlay"
         >
             <h2>Adicionar anime à lista</h2>
+
+            {errors && (<p className={style.textError}>{errors}</p>)}
+
             <form onSubmit={(e) => handleAddNewAnime(e)}>
-                <label>
+                <label ref={containerAutoCompleteRef}>
                     Titulo
                     <input
+                        onKeyUp={() => handleFilterAutocomplete(formData.title)}
+                        onFocus={handleAutocomplete}
                         type="text"
                         placeholder='Ex: hunte x hunter'
                         value={formData.title}
                         onChange={(event) => setFormData({...formData, title: event.target.value})}
                     />
+
+                    {animes && (
+                        <ul className={style.autocomplete}>
+                            {animes.map(anime => (
+                                <li 
+                                    key={anime.id} 
+                                    onClick={() => handleSetAnimeByAutocomplete(anime.id)}
+                                >
+                                    <img src={anime.attributes.posterImage.small} alt={`Imagem de capa do anime ${anime.attributes.canonicalTitle}`} />
+                                    <span>{anime.attributes.canonicalTitle}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </label>
                 <label>
                     Descrição (opcional)

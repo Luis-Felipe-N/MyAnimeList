@@ -3,7 +3,7 @@
 }
 
 .modal__content {
-    background-color: var(--gray-700);
+    background-color: var(--gray-800);
     padding: 1rem;
     border-radius: 8px;
     max-width: 450px;
@@ -92,5 +92,52 @@
                 background-color: var(--purple-500);
             }
         }
+    }
+
+    .autocomplete {
+        list-style: none;
+        background-color: var(--gray-700);
+        border-radius: 5px;
+        overflow: hidden;
+        position: absolute;
+        max-width: 300px;
+        max-height: 400px;
+        overflow: auto;
+
+        li {
+            padding: .5rem 1rem;
+            cursor: pointer;
+            display: grid;
+            grid-template-columns: 3rem 1fr;
+            gap: .5rem;
+            
+            &:hover {
+                background-color: var(--gray-600);
+            }
+
+            img {
+                width: 3rem;
+                height: 3rem;
+                border-radius: 5px;
+                object-fit: cover;
+            }
+
+            span {
+                margin: .5rem 0;
+            }
+        }
+    }
+
+    .textError {
+        margin-top: 1rem;
+        color: var(--red);
+    }
+}
+
+.modal__error {
+    border: 2px solid var(--red);
+
+    &:focus {
+        box-shadow: none;
     }
 }
